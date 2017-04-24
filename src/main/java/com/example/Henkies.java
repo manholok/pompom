@@ -1,9 +1,10 @@
 package com.example;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import com.sun.media.jfxmedia.logging.Logger;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -30,10 +31,12 @@ public class Henkies {
     }
 
     @POST
-    public Response createHenk(Henk henk) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createHenk(@Context HttpHeaders headers, Henk henk) {
         // TEMP: return a Henk, later return a Response, but response is abstract, so I should create a new class with Response implementation
+        String xtoken = headers.getRequestHeader("x-token").get(0);
         return Response.status(200)
-                .entity(henk)
+                .entity(xtoken)
                 .build();
     }
 }
